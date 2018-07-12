@@ -23,5 +23,8 @@
   "homepage": "https://github.com/EndBug/simple-spreadsheets#readme",
   "dependencies": {
     "google-spreadsheet": "^2.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.1"
   }
 }
