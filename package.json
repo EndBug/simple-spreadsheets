@@ -1,0 +1,27 @@
+{
+  "name": "simple-spreadsheets",
+  "version": "0.1.0",
+  "description": "A easy-to-use library that lets you interact with your Google Spreadsheet.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EndBug/simple-spreadsheets.git"
+  },
+  "keywords": [
+    "google",
+    "spreadsheets",
+    "api"
+  ],
+  "author": "Federico Grandi <fgrandi30@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EndBug/simple-spreadsheets/issues"
+  },
+  "homepage": "https://github.com/EndBug/simple-spreadsheets#readme",
+  "dependencies": {
+    "google-spreadsheet": "^2.0.5"
+  }
+}
