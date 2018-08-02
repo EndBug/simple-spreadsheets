@@ -1,25 +1,24 @@
-const GoogleSpreadsheet = require("google-spreadsheet");
+import { GoogleSpreadsheet, SpreadsheetWorksheet, SpreadsheetRow, SpreadsheetCell } from "google-spreadsheet";
+// const GoogleSpreadsheet = require('google-spreadsheet');
 
-class WorksheetStore extends Map {}
-
-async function fetchWorksheets(doc) {
-  return await new Promise(resolve => {
+function fetchWorksheets(doc: GoogleSpreadsheet): Promise<Map<string, SpreadsheetWorksheet>> {
+  return new Promise(resolve => {
     doc.getInfo((err, info) => {
-      if (err) throw new Error(err);
-      let map = new WorksheetStore();
+      if (err) throw err;
+      let map = new Map();
       for (let worksheet of info.worksheets) map.set(worksheet.title.toLowerCase(), worksheet);
       resolve(map);
     });
   });
 }
 
-function findCell(arr, row, col) {
+function findCell(arr: Array<SpreadsheetCell>, row: number, col: number): SpreadsheetCell {
   for (let cell of arr) {
     if (cell.row == row && cell.col == col) return cell;
   }
 }
 
-function findAllCells(arr, { row, col }) {
+function findAllCells(arr: Array<SpreadsheetCell>, { row, col }: { row?: number, col?: number }): Array<SpreadsheetCell> {
   let res = [];
   for (let cell of arr) {
     if (row ? cell.row == row : true && col ? cell.col == col : true) res.push(cell);
@@ -27,26 +26,15 @@ function findAllCells(arr, { row, col }) {
   return res;
 }
 
-function toValue(target) {
-  let arr, isArr = target instanceof Array;
-  if (isArr) arr = target;
-  else arr = [target];
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].value;
-  }
-  if (isArr) return arr;
-  else return arr[0];
-}
-
-function maxRow(cells) {
+function maxRow(cells: Array<SpreadsheetCell>): number {
   let max = 0;
   for (let cell of cells)
     if (cell.row > max) max = cell.row;
   return max;
 }
 
-async function buildObject(sheet) {
-  return await new Promise((resolve, reject) => {
+function buildObject(sheet: SpreadsheetWorksheet): Promise<Array<object>> {
+  return new Promise((resolve, reject) => {
     sheet.getCells({}, (err, cells) => {
       if (err) reject(err);
       else {
@@ -70,12 +58,7 @@ async function buildObject(sheet) {
 }
 
 module.exports = class Document extends GoogleSpreadsheet {
-  constructor({
-    id,
-    email,
-    key,
-    token
-  }) {
+  constructor({ id, email, key, token }: { id: string, email?: string, key?: string, token?: string }) {
     super(id);
 
     if (token) this.setAuthToken(token);

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "allowJs": true,
+    "declaration": true,
+    "noEmit": true,
+    "typeRoots": ["node_modules/@types", "node_modules/google_spreadsheet"]
+  },
+
+  "include": [
+    "./*.ts",
+    "./node_modules/google-spreadsheet/*.ts"
+  ]
+}
